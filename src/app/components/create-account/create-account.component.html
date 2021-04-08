@@ -1,0 +1,133 @@
+<div class="container">
+    <app-header></app-header>
+    <div>
+        <h1 class="row justify-content-center font-style">You're on your way to better hiring</h1>
+        <form class="col-lg-6 offset-lg-3" [formGroup]="createAccountForm" (ngSubmit)="createUser()">
+            <div class="form-group row justify-content-center">
+                <div class="col">
+                    <label>First Name</label>
+                    <input type="text" class="form-control" formControlName="firstName" placeholder="Enter first name">
+                    <span class="text-danger"
+                        *ngIf="createAccountForm.controls['firstName'].touched && (createAccountForm.controls['firstName'].errors?.required)">
+                        *First name is required </span>
+                    <span class="text-danger"
+                        *ngIf="createAccountForm.controls['firstName'].touched && createAccountForm.controls['firstName'].value && (createAccountForm.controls['firstName'].errors?.pattern)">
+                        Enter only alphabets</span>
+                </div>
+                <div class="col">
+                    <label>Last Name</label>
+                    <input type="text" class="form-control" formControlName="lastName" placeholder="Enter last name">
+                    <span class="text-danger"
+                        *ngIf="createAccountForm.controls['lastName'].touched &&  createAccountForm.controls['lastName'].errors?.required">
+                        *Last name is required </span>
+                    <span class="text-danger"
+                        *ngIf="createAccountForm.controls['lastName'].touched && createAccountForm.controls['lastName'].value && (createAccountForm.controls['lastName'].errors?.pattern)">
+                        Enter only alphabets</span>
+                </div>
+            </div>
+            <div class="form-group row justify-content-center">
+                <div class="col">
+                    <label>Email</label>
+                    <input type="email" class="form-control" formControlName="email" placeholder="Enter email">
+                    <span class="text-danger"
+                        *ngIf="createAccountForm.controls['email'].touched && createAccountForm.controls['email'].errors?.required">
+                        *Email is required </span>
+                    <span class="text-danger"
+                        *ngIf="createAccountForm.controls['email'].touched && createAccountForm.controls['email'].value && (createAccountForm.controls['email'].errors?.email || createAccountForm.controls['email'].errors?.emailDomain)">
+                        *Please enter a valid email </span>
+                </div>
+                <div class="col">
+                    <label>Country</label>
+                    <!-- <input type="text" class="form-control" formControlName="country" placeholder="Enter country">-->
+                    <select class="custom-select" (change)="changeCity($event)" formControlName="country">
+                        <option value="" disabled>Choose your Country</option>
+                        <option *ngFor="let obj of Countries" [ngValue]="obj.name">{{obj.name}}</option>
+                    </select>
+                    <span class="text-danger"
+                    *ngIf="createAccountForm.controls['country'].touched && createAccountForm.controls['country'].errors?.required">
+                    *Country is required </span> 
+                </div>
+            </div>
+
+            <div class="form-group  row justify-content-center">
+                <div class="col">
+                    <label>Phone#</label>
+                    <input type="text" class="form-control" formControlName="countryCode" placeholder="Enter country code">
+                    <span class="text-danger"
+                    *ngIf="createAccountForm.controls['countryCode'].touched && createAccountForm.controls['countryCode'].errors?.required">
+                    *Country code is required </span> 
+                </div>
+                <div class="col">
+                    <label></label>
+                    <input type="text" class="form-control" formControlName="phone" placeholder="Enter phone">
+                    <span class="text-danger"
+                        *ngIf="createAccountForm.controls['phone'].touched && createAccountForm.controls['phone'].errors?.required">
+                        *Phone is required </span>
+                    <span class="text-danger"
+                        *ngIf="createAccountForm.controls['phone'].touched && createAccountForm.controls['phone'].value && (createAccountForm.controls['phone'].errors?.pattern)">
+                        Enter only numbers</span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Organization</label>
+                <input type="text" class="form-control" formControlName="organization" placeholder="Enter organization">
+                <span class="text-danger"
+                    *ngIf="createAccountForm.controls['organization'].touched && createAccountForm.controls['organization'].errors?.required">
+                    *Organization is required </span>
+                <span class="text-danger"
+                    *ngIf="createAccountForm.controls['organization'].touched && createAccountForm.controls['organization'].value && (createAccountForm.controls['organization'].errors?.pattern)">
+                    Enter only alphabets</span>
+            </div>
+
+            <div class="form-group">
+                <label>No of Staff</label>
+                <input type="text" class="form-control" formControlName="staffNos" placeholder="Enter no of staff">
+                <span class="text-danger"
+                    *ngIf="createAccountForm.controls['staffNos'].touched && createAccountForm.controls['staffNos'].errors?.required">
+                    *Staff no is required </span>
+                <span class="text-danger"
+                    *ngIf="createAccountForm.controls['staffNos'].touched && createAccountForm.controls['staffNos'].value && (createAccountForm.controls['staffNos'].errors?.pattern)">
+                    Enter only numbers</span>
+            </div>
+
+
+            <div class="form-group">
+                <label>Set Password</label>
+                <input type="password" class="form-control" formControlName="password" placeholder="Enter password">
+                <span class="text-danger"
+                    *ngIf="createAccountForm.controls['password'].touched &&  createAccountForm.controls['password'].errors?.required">
+                    *Password is required</span>
+                <span class="text-danger"
+                    *ngIf="createAccountForm.controls['password'].touched && createAccountForm.controls['password'].value && createAccountForm.controls['password'].errors?.passwordPattern">
+                    *Confirm Password must contain lower case, upper case, special letters and numerics</span>
+            </div>
+
+            <div class="form-group">
+                <label>Confirm Password</label>
+                <input type="password" class="form-control" formControlName="confirmPassword"
+                    placeholder="Enter confirmPassword">
+                <span class="text-danger"
+                    *ngIf="createAccountForm.controls['confirmPassword'].touched &&  createAccountForm.controls['confirmPassword'].errors?.required">
+                    *confirmPassword is required</span>
+                <span class="text-danger"
+                    *ngIf="createAccountForm.controls['confirmPassword'].touched && createAccountForm.controls['confirmPassword'].value && createAccountForm.controls['confirmPassword'].errors?.passwordPattern">
+                    *Confirm Password must contain lower case, upper case, special letters and numerics</span>
+            </div>
+
+            <div class="form-group form-check">
+                <input type="checkbox" formControlName="agreeCheck" id="acceptTerms" class="form-check-input"/>
+                <label for="acceptTerms" class="form-check-label">Review Terms and Conditions</label>
+                <div *ngIf="createAccountForm.controls['agreeCheck'].touched && createAccountForm.controls['agreeCheck'].errors?.required" class="text-danger">Review Terms and Conditions is required</div>
+            </div>
+
+            <div>
+                <span class="text-danger"
+                    *ngIf="createAccountForm.controls['password'].value && createAccountForm.controls['confirmPassword'].value && createAccountForm.errors?.confirmPasswordValidator">
+                    Password and Confirm Password must match</span>
+            </div>
+
+            <button type="submit" [disabled]="!createAccountForm.valid" class="btn btn-primary">Create Account</button>
+        </form>
+    </div>
+</div>
